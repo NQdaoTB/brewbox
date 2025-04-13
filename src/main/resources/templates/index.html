@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BrewBox order Cafe</title>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
+
+<body>
+
+<section class="banner-area" id="home">
+    <div class="container">
+        <div class="row fullscreen d-flex align-items-center justify-content-start" style="height: 969px;">
+            <div class="banner-content col-lg-7">
+                <h6 class="text-black text-uppercase">Feel the energy!</h6>
+                <h1>
+                    Start with BrewBox!
+                </h1>
+                <a th:href="@{/products}" class="primary-btn text-uppercase">Buy Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="menu-area section-gap" id="coffee">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-10">
+                <div class="title text-center">
+                    <h1 class="mb-10">BrewBox coffee brands</h1>
+                    <p>Check out our <b>TOP</b> coffee brands from all around the world!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" th:each="brand: ${brands}">
+                <div class="single-menu">
+                    <img th:src="${brand.imageUrl}" alt="Brand image" class="img-thumbnail"> <!--512x512-->
+                    <div class="title-div justify-content-between d-flex">
+                        <h4>[[${brand.name}]]</h4>
+                    </div>
+                    <p>
+                        [[${brand.description}]]
+                    </p>
+                    <br>
+                    <div>
+                        <a class="card-link" th:href="@{http://www.{name}.com(name = ${#strings.replace(brand.name,' ','')})}">Brand's website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+<div>
+    <nav class="navbar navbar-custom navbar-expand-lg navbar-light bg-light">
+        <a href="/">
+            <img alt="brewbox logo" th:src="@{/images/logo.png}" class="logo">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto col-12 justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="/products/search">Search For Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">All Products</a>
+                </li>
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN') || hasRole('MODERATOR')">
+                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Operations
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/products/add">Add Product</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/brands/add">Add Brand</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/orders/change/status">Change Order Status</a>
+                        <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/add">Add Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add
+                            Moderator</a>
+                        <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/remove">Remove Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/remove">Remove
+                            Moderator</a>
+                    </div>
+                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/orders}">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/cart}">My Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="form-inline my-2 my-lg-0 border px-3">
+                            <a class="nav-link" href="/profile">My profile</a>
+                            <th:block>|</th:block>
+                            <form th:action="@{users/logout}"
+                                  th:method="post">
+                                <input class="btn btn-link nav-link" type="submit" value="Logout">
+                            </form>
+                        </div>
+                    </li>
+                </th:block>
+
+                <th:block sec:authorize="!isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/users/register}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/users/login}">Login</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </nav>
+
+
+</div>
+
+</body>
+</html>
